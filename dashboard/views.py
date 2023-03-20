@@ -19,7 +19,6 @@ def get_counts():
 
     return counts
 
-
 # Create your views here.
 
 @login_required
@@ -61,8 +60,10 @@ def staff(request):
 @login_required
 def staff_detail(request, pk):
     employees = User.objects.get(id=pk)
+    counts = get_counts()
     context = {
         'employees': employees,
+        'counts': counts,
     }
     return render(request, 'dashboard/staff_detail.html', context)
 

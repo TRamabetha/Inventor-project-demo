@@ -12,7 +12,12 @@ CATEGORY = (
 class Product(models.Model):
     name = models.CharField(max_length=100, null=True)
     category = models.CharField(max_length=20, choices=CATEGORY, null=True)
-    quantity = models.PositiveIntegerField(null=True)
+    quantity = models.PositiveIntegerField(default=1, null=True)
+    available = models.BooleanField(null=True)
+    serial_number = models.BigIntegerField(null=True)
+    description = models.CharField(max_length=100, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(null=True)
 
     class Meta:
         verbose_name_plural = 'Product'

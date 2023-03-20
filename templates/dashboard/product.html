@@ -7,8 +7,8 @@
 {% include 'partials/topnav.html'%}
 <!--Table-->
 <div class="container">
-    <div class="row my-4">
-        <div class="col-md-4">
+    <div class="row my-5">
+        <div class="col-md-3">
             {%for message in messages%}
             {%if message%}
             <div class="alert alert-{{message.tags}}">
@@ -26,27 +26,51 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-8">
-            <table class="table bg-white">
+        <div class="col-md-9" >
+            <table class="table bg-white table-striped">
                 <thead class="bg-info">
                 <tr class="text-white">
-                    <th scope="col">#</th>
+                    <th scope="col">Available</th>
+                    <th scope="col">Serial No.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Category</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Activity</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">date</th>
+                    <th scope="col">Active</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for item in items %}
-                <tr>
-                    <th scope="row">{{ item.pk }}</th>
+                <tr class="table-row" data-href="{% url 'dashboard-product-update' item.pk %}">
+                    <td class="text-center" style="display: flex; justify-content: center;">
+                        {% if item.available is True %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: green;"></div>
+                        {% elif item.available is False %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: red;"></div>
+                        {% else %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: grey;"></div>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.serial_number }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.category }}</td>
-                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.date|date:"d-m-y H:i" }}</td>
+                    <td class="text-center" style="display: flex; justify-content: center;">
+                        {% if item.active is True %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: green;"></div>
+                        {% elif item.active is False %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: red;"></div>
+                        {% else %}
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background-color: grey;"></div>
+                        {% endif %}
+                    </td>
                     <td>
+                      <div class="btn-group" role="group">
                         <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.pk %}">Edit</a>
                         <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.pk %}">Delete</a>
+                      </div>
                     </td>
                 </tr>
                 {% endfor %}
